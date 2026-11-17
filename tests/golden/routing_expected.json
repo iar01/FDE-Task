@@ -1,0 +1,12 @@
+[
+  {"draft_id": "DQ-24101", "status": "specialist_only", "net_total": 435.23, "effective_discount_pct": 8.0, "approver_id": null, "flagged_lines": [], "duplicate_of": null},
+  {"draft_id": "DQ-24102", "status": "approver_required", "net_total": 132.46, "effective_discount_pct": 18.0, "approver_id": "U01", "flagged_lines": [], "duplicate_of": null},
+  {"draft_id": "DQ-24103", "status": "approver_required", "net_total": 728.8, "effective_discount_pct": 26.22, "approver_id": "U05", "flagged_lines": [3], "duplicate_of": null},
+  {"draft_id": "DQ-24104", "status": "approver_required", "net_total": 2191.0, "effective_discount_pct": 30.0, "approver_id": "U05", "flagged_lines": [1], "duplicate_of": null},
+  {"draft_id": "DQ-24105", "status": "specialist_only", "net_total": 471.2, "effective_discount_pct": 5.0, "approver_id": null, "flagged_lines": [3], "duplicate_of": null},
+  {"draft_id": "DQ-24106", "status": "approver_required", "net_total": 47652.0, "effective_discount_pct": 5.0, "approver_id": "U04", "flagged_lines": [], "duplicate_of": null},
+  {"draft_id": "DQ-24107", "status": "approver_required", "net_total": 456.54, "effective_discount_pct": 15.38, "approver_id": "U01", "flagged_lines": [1], "duplicate_of": null},
+  {"draft_id": "DQ-24108", "status": "specialist_only", "net_total": 1517.4, "effective_discount_pct": 10.0, "approver_id": null, "flagged_lines": [1], "duplicate_of": null},
+  {"draft_id": "DQ-24109", "status": "approver_required", "net_total": 1409.86, "effective_discount_pct": 18.36, "approver_id": "U04", "flagged_lines": [3, 6], "duplicate_of": null},
+  {"draft_id": "DQ-24110", "status": "duplicate", "net_total": 132.46, "effective_discount_pct": 18.0, "approver_id": null, "flagged_lines": [], "duplicate_of": "DQ-24102"}
+]

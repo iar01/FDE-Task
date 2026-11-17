@@ -1,0 +1,36 @@
+# Ridgeline quote approval POLICY. Source: data/approval_rules.md (rule numbers in comments).
+# People (approvers, regions, backups, out-of-office) are NOT here: they come only from
+# data/reporting_db/approvers.csv via app/reporting.py.
+# Change this file to change routing; no code release needed. app/rules.py validates it on start.
+
+version: "2026-10-12.1"
+timezone: America/Chicago                 # "Assume ... 09:30 Central"; dates (contracts, OOO) are Central
+
+low_confidence_threshold: 0.85            # rule 8: "extraction_confidence below 0.85" (flag if < 0.85)
+stock_max_age_hours: 24                   # rule 10: "stock reading older than 24 hours"
+reporting_max_age_hours: 36               # rule 10: "reporting database export older than 36 hours"
+duplicate_window_hours: 24                # rule 11: "a draft received in the last 24 hours"
+
+# Rule table "Who must approve (after specialist review)". Evaluated top-down, first match wins.
+# Comparisons use the UNROUNDED effective discount (rule 6; DECISIONS.md A3).
+tiers:
+  - name: vp
+    when: {discount_pct_gt: 25}           # "Effective discount over 25% | VP of Sales"
+    approver: {role: vp_sales}
+  - name: regional_manager
+    when_any:                             # "over 15% up to 25%, or net total $25,000 or more"
+      - {discount_pct_gt: 15}
+      - {net_total_gte: 25000}
+    approver: {role: regional_manager, match_region: customer}   # "for the customer's region"
+  - name: specialist_only
+    when: {}                              # "15% or less and net total under $25,000"
+    approver: null                        # "Quote specialist only"
+
+# Rule 1: "A quote specialist gives final approval on every quote". Assignment per DECISIONS.md A1.
+specialist_signoff: {role: quote_specialist, assign: prepared_by}
+
+# Rule 7 (backup when out of office) is applied from approvers.csv; no settings needed here.
+
+escalation:                               # NOT in Ridgeline's policy: our proposal (DECISIONS.md A9). Off.
+  enabled: false
+  pending_sla_minutes: 120

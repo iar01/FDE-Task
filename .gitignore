@@ -1,0 +1,49 @@
+# Deliverables that MUST stay tracked (do not ignore): README.md, .chat-history/,
+# outputs/routing_results.json, .env.example, data/ (the sample data pack the service runs on).
+
+# --- secrets and local settings ------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# --- our own runtime state (recreated by `python -m app.process --reset`) ------------------
+app.db
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+*.sqlite3
+# atomic-write temp files from app/outputs.py
+outputs/*.tmp
+# scratch runs, e.g. --db demo.db --out-dir demo_out
+demo_out/
+
+# --- macOS metadata from the data pack zip (not data) ---------------------------------------
+__MACOSX/
+._*
+.DS_Store
+
+# --- Python ---------------------------------------------------------------------------------
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# --- editors / OS ---------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+
+# --- graft's local graph cache: regenerable, not committed (run `graft build`) --------------
+/graft/

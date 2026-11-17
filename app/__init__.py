@@ -1,0 +1,1 @@
+"""Ridgeline Quote Approvals service."""

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "routing_results.schema.json",
+  "title": "outputs/routing_results.json (CHALLENGE.md Deliverable 1)",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["draft_id", "status", "net_total", "effective_discount_pct", "approver_id",
+                 "specialist_review_flags", "duplicate_of"],
+    "properties": {
+      "draft_id": {"type": "string", "minLength": 1},
+      "status": {"enum": ["specialist_only", "approver_required", "duplicate"]},
+      "net_total": {"type": ["number", "null"], "multipleOf": 0.01, "minimum": 0},
+      "effective_discount_pct": {"type": ["number", "null"], "multipleOf": 0.01, "maximum": 100},
+      "approver_id": {"type": ["string", "null"], "minLength": 1},
+      "specialist_review_flags": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["line", "reason"],
+          "properties": {
+            "line": {"type": ["integer", "null"], "minimum": 1},
+            "reason": {"type": "string", "minLength": 1}
+          }
+        }
+      },
+      "duplicate_of": {"type": ["string", "null"], "minLength": 1}
+    },
+    "allOf": [
+      {
+        "if": {"properties": {"status": {"const": "duplicate"}}},
+        "then": {"properties": {"duplicate_of": {"type": "string"}, "approver_id": {"type": "null"}}},
+        "else": {"properties": {"duplicate_of": {"type": "null"}}}
+      },
+      {
+        "if": {"properties": {"status": {"const": "specialist_only"}}},
+        "then": {"properties": {"approver_id": {"type": "null"}}}
+      }
+    ]
+  }
+}

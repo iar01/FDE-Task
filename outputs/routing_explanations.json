@@ -1,0 +1,522 @@
+[
+  {
+    "draft_id": "DQ-24101",
+    "status": "specialist_only",
+    "workflow_status": "pending_specialist_review",
+    "as_of": "2026-10-12T09:30:00-05:00",
+    "reused_from_store": false,
+    "tier": "specialist_only",
+    "approver_id": null,
+    "routed_via_backup_of": null,
+    "specialist_id": "S01",
+    "rules_version": "2026-10-12.1",
+    "rules_hash": "76f0ea74b5d5e56a3e1d60d0b8f89becb5902a54404930576b927e658a063505",
+    "list_total": 473.08,
+    "net_total": 435.23,
+    "effective_discount_pct": 8.00,
+    "reporting_age_hours": 31.5,
+    "lines": [
+      {
+        "line": 1,
+        "part_number": "RL104165",
+        "quantity": 30,
+        "price_source": "list",
+        "unit_price": 9.30
+      },
+      {
+        "line": 2,
+        "part_number": "RL134671",
+        "quantity": 8,
+        "price_source": "list",
+        "unit_price": 12.76
+      },
+      {
+        "line": 3,
+        "part_number": "RL159429",
+        "quantity": 2,
+        "price_source": "list",
+        "unit_price": 46.00
+      }
+    ],
+    "duplicate_of": null,
+    "flags": [],
+    "trace": [
+      "no approver tier matched (effective discount 8.00%, net 435.23) -> tier specialist_only",
+      "specialist sign-off: S01 (prepared_by)"
+    ]
+  },
+  {
+    "draft_id": "DQ-24102",
+    "status": "approver_required",
+    "workflow_status": "pending_specialist_review",
+    "as_of": "2026-10-12T09:30:00-05:00",
+    "reused_from_store": false,
+    "tier": "regional_manager",
+    "approver_id": "U01",
+    "routed_via_backup_of": null,
+    "specialist_id": "S02",
+    "rules_version": "2026-10-12.1",
+    "rules_hash": "76f0ea74b5d5e56a3e1d60d0b8f89becb5902a54404930576b927e658a063505",
+    "list_total": 161.54,
+    "net_total": 132.46,
+    "effective_discount_pct": 18.00,
+    "reporting_age_hours": 31.5,
+    "lines": [
+      {
+        "line": 1,
+        "part_number": "RL142504",
+        "quantity": 3,
+        "price_source": "list",
+        "unit_price": 19.00
+      },
+      {
+        "line": 2,
+        "part_number": "RL153354",
+        "quantity": 5,
+        "price_source": "list",
+        "unit_price": 14.50
+      },
+      {
+        "line": 3,
+        "part_number": "RL165909",
+        "quantity": 4,
+        "price_source": "list",
+        "unit_price": 8.01
+      }
+    ],
+    "duplicate_of": null,
+    "flags": [],
+    "trace": [
+      "effective discount 18.00% > 15 -> tier regional_manager (West) -> U01",
+      "specialist sign-off: S02 (prepared_by)"
+    ]
+  },
+  {
+    "draft_id": "DQ-24103",
+    "status": "approver_required",
+    "workflow_status": "pending_specialist_review",
+    "as_of": "2026-10-12T09:30:00-05:00",
+    "reused_from_store": false,
+    "tier": "vp",
+    "approver_id": "U05",
+    "routed_via_backup_of": null,
+    "specialist_id": "S01",
+    "rules_version": "2026-10-12.1",
+    "rules_hash": "76f0ea74b5d5e56a3e1d60d0b8f89becb5902a54404930576b927e658a063505",
+    "list_total": 987.82,
+    "net_total": 728.80,
+    "effective_discount_pct": 26.22,
+    "reporting_age_hours": 31.5,
+    "lines": [
+      {
+        "line": 1,
+        "part_number": "RL178907",
+        "quantity": 12,
+        "price_source": "contract",
+        "unit_price": 9.53
+      },
+      {
+        "line": 2,
+        "part_number": "RL125203",
+        "quantity": 4,
+        "price_source": "list",
+        "unit_price": 19.25
+      },
+      {
+        "line": 3,
+        "part_number": "RL120374",
+        "quantity": 25,
+        "price_source": "list",
+        "unit_price": 11.90
+      },
+      {
+        "line": 4,
+        "part_number": "RL194646",
+        "quantity": 6,
+        "price_source": "contract",
+        "unit_price": 31.45
+      },
+      {
+        "line": 5,
+        "part_number": "RL131850",
+        "quantity": 12,
+        "price_source": "list",
+        "unit_price": 6.90
+      },
+      {
+        "line": 6,
+        "part_number": "RL185180",
+        "quantity": 3,
+        "price_source": "list",
+        "unit_price": 58.00
+      }
+    ],
+    "duplicate_of": null,
+    "flags": [
+      {
+        "line": 3,
+        "code": "stock_not_found",
+        "reason": "part not found in stock API"
+      }
+    ],
+    "trace": [
+      "effective discount 26.22% > 25 -> tier vp -> U05",
+      "specialist sign-off: S01 (prepared_by)"
+    ]
+  },
+  {
+    "draft_id": "DQ-24104",
+    "status": "approver_required",
+    "workflow_status": "pending_specialist_review",
+    "as_of": "2026-10-12T09:30:00-05:00",
+    "reused_from_store": false,
+    "tier": "vp",
+    "approver_id": "U05",
+    "routed_via_backup_of": null,
+    "specialist_id": "S03",
+    "rules_version": "2026-10-12.1",
+    "rules_hash": "76f0ea74b5d5e56a3e1d60d0b8f89becb5902a54404930576b927e658a063505",
+    "list_total": 3130.00,
+    "net_total": 2191.00,
+    "effective_discount_pct": 30.00,
+    "reporting_age_hours": 31.5,
+    "lines": [
+      {
+        "line": 1,
+        "part_number": "RL107944",
+        "quantity": 20,
+        "price_source": "list",
+        "unit_price": 96.00
+      },
+      {
+        "line": 2,
+        "part_number": "RL195448",
+        "quantity": 10,
+        "price_source": "list",
+        "unit_price": 121.00
+      }
+    ],
+    "duplicate_of": null,
+    "flags": [
+      {
+        "line": 1,
+        "code": "stock_stale",
+        "reason": "stock reading 49.5 h old (as_of 2026-10-10T08:00:00-05:00)"
+      }
+    ],
+    "trace": [
+      "effective discount 30.00% > 25 -> tier vp -> U05",
+      "specialist sign-off: S03 (prepared_by)"
+    ]
+  },
+  {
+    "draft_id": "DQ-24105",
+    "status": "specialist_only",
+    "workflow_status": "pending_specialist_review",
+    "as_of": "2026-10-12T09:30:00-05:00",
+    "reused_from_store": false,
+    "tier": "specialist_only",
+    "approver_id": null,
+    "routed_via_backup_of": null,
+    "specialist_id": "S02",
+    "rules_version": "2026-10-12.1",
+    "rules_hash": "76f0ea74b5d5e56a3e1d60d0b8f89becb5902a54404930576b927e658a063505",
+    "list_total": 496.00,
+    "net_total": 471.20,
+    "effective_discount_pct": 5.00,
+    "reporting_age_hours": 31.5,
+    "lines": [
+      {
+        "line": 1,
+        "part_number": "RL104165",
+        "quantity": 30,
+        "price_source": "list",
+        "unit_price": 9.30
+      },
+      {
+        "line": 2,
+        "part_number": "RL177128",
+        "quantity": 50,
+        "price_source": "list",
+        "unit_price": 2.90
+      },
+      {
+        "line": 3,
+        "part_number": "RL195561",
+        "quantity": 1,
+        "price_source": "list",
+        "unit_price": 72.00
+      }
+    ],
+    "duplicate_of": null,
+    "flags": [
+      {
+        "line": 3,
+        "code": "low_confidence",
+        "reason": "extraction confidence 0.62"
+      }
+    ],
+    "trace": [
+      "line 3 extraction confidence 0.62 < 0.85 -> specialist review",
+      "no approver tier matched (effective discount 5.00%, net 471.20) -> tier specialist_only",
+      "specialist sign-off: S02 (prepared_by)"
+    ]
+  },
+  {
+    "draft_id": "DQ-24106",
+    "status": "approver_required",
+    "workflow_status": "pending_specialist_review",
+    "as_of": "2026-10-12T09:30:00-05:00",
+    "reused_from_store": false,
+    "tier": "regional_manager",
+    "approver_id": "U04",
+    "routed_via_backup_of": "U02",
+    "specialist_id": "S03",
+    "rules_version": "2026-10-12.1",
+    "rules_hash": "76f0ea74b5d5e56a3e1d60d0b8f89becb5902a54404930576b927e658a063505",
+    "list_total": 50160.00,
+    "net_total": 47652.00,
+    "effective_discount_pct": 5.00,
+    "reporting_age_hours": 31.5,
+    "lines": [
+      {
+        "line": 1,
+        "part_number": "RL109071",
+        "quantity": 40,
+        "price_source": "list",
+        "unit_price": 1174.00
+      },
+      {
+        "line": 2,
+        "part_number": "RL115129",
+        "quantity": 80,
+        "price_source": "list",
+        "unit_price": 17.50
+      },
+      {
+        "line": 3,
+        "part_number": "RL185717",
+        "quantity": 80,
+        "price_source": "list",
+        "unit_price": 22.50
+      }
+    ],
+    "duplicate_of": null,
+    "flags": [],
+    "trace": [
+      "net 47652.00 >= 25000 -> tier regional_manager (Central) -> U02",
+      "U02 out of office 2026-10-12..2026-10-16 -> backup U04",
+      "specialist sign-off: S03 (prepared_by)"
+    ]
+  },
+  {
+    "draft_id": "DQ-24107",
+    "status": "approver_required",
+    "workflow_status": "pending_specialist_review",
+    "as_of": "2026-10-12T09:30:00-05:00",
+    "reused_from_store": false,
+    "tier": "regional_manager",
+    "approver_id": "U01",
+    "routed_via_backup_of": null,
+    "specialist_id": "S01",
+    "rules_version": "2026-10-12.1",
+    "rules_hash": "76f0ea74b5d5e56a3e1d60d0b8f89becb5902a54404930576b927e658a063505",
+    "list_total": 539.50,
+    "net_total": 456.54,
+    "effective_discount_pct": 15.38,
+    "reporting_age_hours": 31.5,
+    "lines": [
+      {
+        "line": 1,
+        "part_number": "RL171482",
+        "quantity": 20,
+        "price_source": "list",
+        "unit_price": 8.40
+      },
+      {
+        "line": 2,
+        "part_number": "RL112676",
+        "quantity": 10,
+        "price_source": "list",
+        "unit_price": 12.04
+      },
+      {
+        "line": 3,
+        "part_number": "RL159429",
+        "quantity": 3,
+        "price_source": "contract",
+        "unit_price": 39.10
+      },
+      {
+        "line": 4,
+        "part_number": "RL165435",
+        "quantity": 2,
+        "price_source": "list",
+        "unit_price": 56.55
+      }
+    ],
+    "duplicate_of": null,
+    "flags": [
+      {
+        "line": 1,
+        "code": "contract_expired",
+        "reason": "contract price expired 2025-12-31; list price used"
+      }
+    ],
+    "trace": [
+      "effective discount 15.38% > 15 -> tier regional_manager (West) -> U01",
+      "specialist sign-off: S01 (prepared_by)"
+    ]
+  },
+  {
+    "draft_id": "DQ-24108",
+    "status": "specialist_only",
+    "workflow_status": "pending_specialist_review",
+    "as_of": "2026-10-12T09:30:00-05:00",
+    "reused_from_store": false,
+    "tier": "specialist_only",
+    "approver_id": null,
+    "routed_via_backup_of": null,
+    "specialist_id": "S02",
+    "rules_version": "2026-10-12.1",
+    "rules_hash": "76f0ea74b5d5e56a3e1d60d0b8f89becb5902a54404930576b927e658a063505",
+    "list_total": 1686.00,
+    "net_total": 1517.40,
+    "effective_discount_pct": 10.00,
+    "reporting_age_hours": 31.5,
+    "lines": [
+      {
+        "line": 1,
+        "part_number": "RL110322",
+        "quantity": 2,
+        "price_source": "list",
+        "unit_price": 618.00
+      },
+      {
+        "line": 2,
+        "part_number": "RL118373",
+        "quantity": 40,
+        "price_source": "list",
+        "unit_price": 2.40
+      },
+      {
+        "line": 3,
+        "part_number": "RL184696",
+        "quantity": 3,
+        "price_source": "list",
+        "unit_price": 118.00
+      }
+    ],
+    "duplicate_of": null,
+    "flags": [
+      {
+        "line": 1,
+        "code": "out_of_stock",
+        "reason": "out of stock in all warehouses"
+      }
+    ],
+    "trace": [
+      "no approver tier matched (effective discount 10.00%, net 1517.40) -> tier specialist_only",
+      "specialist sign-off: S02 (prepared_by)"
+    ]
+  },
+  {
+    "draft_id": "DQ-24109",
+    "status": "approver_required",
+    "workflow_status": "pending_specialist_review",
+    "as_of": "2026-10-12T09:30:00-05:00",
+    "reused_from_store": false,
+    "tier": "regional_manager",
+    "approver_id": "U04",
+    "routed_via_backup_of": "U02",
+    "specialist_id": "S03",
+    "rules_version": "2026-10-12.1",
+    "rules_hash": "76f0ea74b5d5e56a3e1d60d0b8f89becb5902a54404930576b927e658a063505",
+    "list_total": 1727.00,
+    "net_total": 1409.86,
+    "effective_discount_pct": 18.36,
+    "reporting_age_hours": 31.5,
+    "lines": [
+      {
+        "line": 1,
+        "part_number": "RL134741",
+        "quantity": 15,
+        "price_source": "list",
+        "unit_price": 19.00
+      },
+      {
+        "line": 2,
+        "part_number": "RL179507",
+        "quantity": 10,
+        "price_source": "contract",
+        "unit_price": 22.14
+      },
+      {
+        "line": 3,
+        "part_number": "RL172063",
+        "quantity": 10,
+        "price_source": "list",
+        "unit_price": 14.00
+      },
+      {
+        "line": 4,
+        "part_number": "RL118373",
+        "quantity": 40,
+        "price_source": "list",
+        "unit_price": 2.40
+      },
+      {
+        "line": 5,
+        "part_number": "RL124050",
+        "quantity": 40,
+        "price_source": "list",
+        "unit_price": 3.20
+      },
+      {
+        "line": 6,
+        "part_number": "RL107944",
+        "quantity": 6,
+        "price_source": "list",
+        "unit_price": 96.00
+      },
+      {
+        "line": 7,
+        "part_number": "RL149009",
+        "quantity": 4,
+        "price_source": "list",
+        "unit_price": 58.00
+      }
+    ],
+    "duplicate_of": null,
+    "flags": [
+      {
+        "line": 3,
+        "code": "low_confidence",
+        "reason": "extraction confidence 0.79"
+      },
+      {
+        "line": 6,
+        "code": "stock_stale",
+        "reason": "stock reading 49.5 h old (as_of 2026-10-10T08:00:00-05:00)"
+      }
+    ],
+    "trace": [
+      "line 3 extraction confidence 0.79 < 0.85 -> specialist review",
+      "effective discount 18.36% > 15 -> tier regional_manager (Central) -> U02",
+      "U02 out of office 2026-10-12..2026-10-16 -> backup U04",
+      "specialist sign-off: S03 (prepared_by)"
+    ]
+  },
+  {
+    "draft_id": "DQ-24110",
+    "status": "duplicate",
+    "workflow_status": "duplicate",
+    "as_of": "2026-10-12T09:30:00-05:00",
+    "reused_from_store": false,
+    "duplicate_of": "DQ-24102",
+    "flags": [],
+    "trace": [
+      "same rfq_id RFQ-1010 and same lines as DQ-24102, received 74 min earlier (window 24 h) -> duplicate, no approval request"
+    ]
+  }
+]
