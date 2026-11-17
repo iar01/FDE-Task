@@ -169,7 +169,11 @@ The one decision that matters most: **The one decision that matters most:** an a
 - **Roles and separation of duties.** Specialists see all quotes; approvers see quotes routed to them.
   Only the routed approver (after backup) can approve; the out-of-office original gets a 403 that names
   the backup. Specialists cannot do the approver step and approvers cannot do specialist steps.
-  Missing or unknown user is a 401. Every denied attempt (401/403/404/409/422) is audited.
+  Missing or unknown user is a 401. Every state change and every denied attempt (401/403/404/409/422,
+  including malformed requests rejected by request validation) is audited; the raw request input is not
+  stored. Successful reads are not audited, because they aren't actions on a quote (production: access logs).
+- **Never writes to SAP or `data/`.** There is no SAP client. Every write path (`app.db`, `--reset`,
+  `outputs/`) goes through `app/paths.py`, which refuses anything under `data/` before any I/O; the CLI exits 2.
 - **Tamper-evident audit.** `audit_log` is append-only (SQLite triggers reject UPDATE/DELETE), and each
   row's hash is `sha256(prev_hash + canonical row)`. `GET /audit/verify` re-walks the chain and names the
   first altered entry, even if the triggers were bypassed. Audit timestamps are real wall-clock time,

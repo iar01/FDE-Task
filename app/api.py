@@ -15,6 +15,7 @@ from decimal import Decimal
 from typing import Any
 
 from fastapi import FastAPI, Header, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict
 
@@ -90,6 +91,30 @@ def create_app(services: Services | None = None) -> FastAPI:
     @app.exception_handler(ApiError)
     async def _api_error(request: Request, exc: ApiError):
         return JSONResponse(status_code=exc.status, content={"error": exc.error, "message": exc.message})
+
+    @app.exception_handler(RequestValidationError)
+    async def _invalid_request(request: Request, exc: RequestValidationError):
+        """Malformed requests (wrong type, extra key, bad JSON) fail before any handler runs.
+
+        They are denied attempts too, so they are audited here. The raw input is NOT stored:
+        a pasted body must not put sensitive data into the permanent audit log.
+        """
+        s = svc(request)
+        route = request.scope.get("route")
+        name = getattr(getattr(route, "endpoint", None), "__name__", "request")
+        action = {"edit_quote": "edit", "reload_rules": "rules_reload", "simulate_rules": "rules_simulate"}.get(name, name)
+        path = request.url.path
+        entity = "rules" if path.startswith("/rules") else "audit" if path.startswith("/audit") else "quote"
+        entity_id = request.path_params.get("draft_id") or path
+        errors = [{"loc": list(e.get("loc", ())), "msg": e.get("msg"), "type": e.get("type")} for e in exc.errors()]
+        actor = (request.headers.get(USER_HEADER) or "anonymous")[:64]
+        with s.lock:
+            row = s.store.get_quote(entity_id) if entity == "quote" else None
+            status = row.status if row else None
+            audit(s, actor, f"{action}_denied", entity_id, status, status,
+                  {"http_status": 422, "error": "invalid_request", "errors": errors}, entity)
+        return JSONResponse(status_code=422, content={
+            "error": "invalid_request", "message": "request body or parameters are invalid", "errors": errors})
 
     def svc(request: Request) -> Services:
         return request.app.state.svc

@@ -133,7 +133,7 @@
 ## Brief coverage
 | Brief item | Step |
 |---|---|
-| Part 1: say plan + stubs before coding | GAP (recording; content prepared in PLAN.md/DECISIONS.md) |
+| Part 1: say plan + stubs before coding | USER ACTION – pending (recording; script: PLAN.md + DECISIONS.md) |
 | 2.1 Contract pricing from reporting DB | 2 |
 | 2.1 Stock check through API | 3 |
 | 2.1 Handle stale/unavailable data clearly | 3, 5 |
@@ -157,22 +157,30 @@
 | 4.4 Two more weeks | 9 |
 | Part 5 demo on sample drafts | 5, 7 |
 | Deliverable README.md (exact headings) | 9 |
-| Deliverable .chat-history/ | ongoing (CLAUDE.md logging), GAP for final zip check |
+| Deliverable .chat-history/ | ongoing (CLAUDE.md logging); verified by `scripts/check_submission.py --zip` |
 | Deliverable outputs/routing_results.json | 5 |
 | Deliverable tests + command in How to Run | 8, 9 |
 | .env.example (names only) | 9 |
-| Repository: public GitHub link | GAP (repo creation + push is a user action) |
-| Zip ridgeline-quote-approvals.zip, no .env | GAP (submission step) |
-| AC: recording opens with plan, ends with demo | GAP (recording) |
+| Repository: public GitHub link | USER ACTION – pending (create repo, push, fill README `## Repository`) |
+| Zip ridgeline-quote-approvals.zip, no .env | `scripts/check_submission.py --zip` builds + verifies it; USER ACTION – pending (run it after the final commit) |
+| AC: recording opens with plan, ends with demo | USER ACTION – pending (recording; demo script: docs/demo.md + scripts/demo.py) |
 | AC: rules configurable + tested | 4, 8 |
 | AC: pricing from reporting DB, stock from API, no SAP writes | 2, 3 |
 | AC: every action audited | 5, 6 |
 | AC: stock failure / stale handled visibly, retried | 3, 7 |
-| AC: every stub explained in recording | GAP (recording; Stubs table below is the script) |
+| AC: every stub explained in recording | USER ACTION – pending (recording; Stubs table below is the script) |
 | AC: production diagram shown | 9 |
 | AC: no quote reaches customer without human approval | 6 |
 | AC: routing_results.json format | 5, 8 |
-| AC: zip has all deliverables, no .env | 9 + GAP (zip) |
+| AC: zip has all deliverables, no .env | 9 + `scripts/check_submission.py --zip` |
+
+## Submission checklist (user actions)
+- [ ] Record: plan first (Part 1), stubs explained, demo last (`docs/demo.md`, `scripts/demo.py`, `python -m app.process`)
+- [ ] Create the public GitHub repo and fill in README `## Repository`
+- [x] README "The one decision that matters most" written
+- [ ] Re-run `python -m app.process --reset` with the mock running; `outputs/routing_results.json` has no "stock unavailable" flags
+- [ ] Commit and push (`git branch -m main` first if the remote expects `main`)
+- [ ] `python scripts/check_submission.py --zip` -> no FAIL; submit `ridgeline-quote-approvals.zip` + MP4 link
 
 ## Stubs
 | Stubbed | Why | Production version |

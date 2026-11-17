@@ -14,6 +14,7 @@ from typing import Any, Sequence
 import jsonschema
 
 from app.money import to_money, to_pct
+from app.paths import PROTECTED_DIRS, ensure_writable
 
 SCHEMA_PATH = Path(__file__).parent / "schemas" / "routing_results.schema.json"
 RESULT_KEYS = ("draft_id", "status", "net_total", "effective_discount_pct", "approver_id",
@@ -77,8 +78,10 @@ def _atomic_write(path: Path, text: str, validate=None) -> None:
         tmp.unlink(missing_ok=True)
 
 
-def write_outputs(results: Sequence, out_dir: Path, explanations: list[dict[str, Any]]) -> tuple[Path, Path]:
+def write_outputs(results: Sequence, out_dir: Path, explanations: list[dict[str, Any]],
+                  protected: tuple[Path, ...] = PROTECTED_DIRS) -> tuple[Path, Path]:
     out_dir = Path(out_dir)
+    ensure_writable(out_dir, protected, what="write outputs")  # before any mkdir or file write
     ids = [r.draft_id for r in results]
     results_path = out_dir / "routing_results.json"
     _atomic_write(results_path, render_json([routing_result(r) for r in results]),

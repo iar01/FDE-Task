@@ -173,6 +173,25 @@ def test_cannot_approve_twice(client):
     assert step(client, "DQ-24101", "final-signoff", "S01").status_code == 409
 
 
+@pytest.mark.parametrize("user, kwargs, actor", [
+    ("U01", {"json": {"version": "abc"}}, "U01"),                       # wrong type
+    ("S01", {"json": {"version": 2, "approve_anyway": True}}, "S01"),   # extra key
+    (None, {"content": b"not json{", "headers": {"Content-Type": "application/json"}}, "anonymous"),
+])
+def test_request_validation_errors_are_audited(client, user, kwargs, actor):
+    before = len(client.store.audit_entries())
+    headers = {**as_(user), **kwargs.pop("headers", {})}
+    r = client.post("/quotes/DQ-24101/specialist-review", headers=headers, **kwargs)
+    assert r.status_code == 422 and r.json()["error"] == "invalid_request"
+    entries = client.store.audit_entries()
+    assert len(entries) == before + 1
+    e = entries[-1]
+    assert (e["actor_id"], e["action"], e["entity_id"]) == (actor, "specialist_review_denied", "DQ-24101")
+    assert e["before_status"] == e["after_status"] == "pending_specialist_review"
+    assert '"input"' not in e["details_json"] and "approve_anyway\": true" not in e["details_json"]
+    assert client.get("/audit/verify", headers=as_("S01")).json()["ok"]
+
+
 def test_missing_version_is_422(client):
     r = client.post("/quotes/DQ-24101/specialist-review", headers=as_("S01"), json={})
     assert r.status_code == 422 and r.json()["error"] == "version_required"

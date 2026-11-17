@@ -16,6 +16,7 @@ from typing import Any, Iterator
 
 from app.clock import Clock, SystemClock
 from app.duplicates import Original
+from app.paths import PROTECTED_DIRS, ProtectedPathError, ensure_writable
 
 GENESIS = "0" * 64
 
@@ -75,7 +76,7 @@ class VersionConflict(RuntimeError):
     """The quote changed since the caller read it (optimistic concurrency)."""
 
 
-class StoreLocationError(ValueError):
+class StoreLocationError(ProtectedPathError):
     """Refusing to put our database somewhere we must never write (e.g. data/)."""
 
 
@@ -116,20 +117,25 @@ def _row_hash(prev_hash: str, row: dict[str, Any]) -> str:
     return hashlib.sha256((prev_hash + canonical(row)).encode("utf-8")).hexdigest()
 
 
-def reset_database(path: Path) -> None:
-    """Drop app.db (and SQLite side files). Pure Python, so it works on Windows."""
+def reset_database(path: Path, protected: tuple[Path, ...] = PROTECTED_DIRS) -> None:
+    """Drop app.db (and SQLite side files). Pure Python, so it works on Windows.
+
+    Checked BEFORE anything is deleted: never under data/.
+    """
+    for suffix in ("", "-wal", "-shm", "-journal"):
+        ensure_writable(Path(f"{path}{suffix}"), protected, what="delete a database")
     for suffix in ("", "-wal", "-shm", "-journal"):
         Path(f"{path}{suffix}").unlink(missing_ok=True)
 
 
 class Store:
     def __init__(self, path: Path, *, audit_clock: Clock | None = None,
-                 forbidden_dirs: tuple[Path, ...] = (Path("data"),)) -> None:
+                 forbidden_dirs: tuple[Path, ...] = PROTECTED_DIRS) -> None:
         path = Path(path)
-        resolved = path.resolve()
-        for d in forbidden_dirs:
-            if resolved.is_relative_to(Path(d).resolve()):
-                raise StoreLocationError(f"refusing to create the app database under {d}/: {path}")
+        try:
+            ensure_writable(path, forbidden_dirs, what="create the app database")
+        except ProtectedPathError as exc:
+            raise StoreLocationError(str(exc)) from exc
         # Audit timestamps are real wall-clock time, even when business logic runs "as of" another time.
         self._clock = audit_clock or SystemClock()
         # check_same_thread=False: the API serialises access with its own lock (FastAPI threadpool).

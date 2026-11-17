@@ -47,3 +47,6 @@ Thumbs.db
 
 # --- graft's local graph cache: regenerable, not committed (run `graft build`) --------------
 /graft/
+
+# submission zip built by scripts/check_submission.py --zip
+ridgeline-quote-approvals.zip

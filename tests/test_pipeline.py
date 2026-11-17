@@ -20,7 +20,9 @@ from app.pipeline import Pipeline, explanation
 from app.reporting import load_snapshot
 from app.rules import load_rules
 from app.stock_client import StockClient
-from app.store import Store, StoreLocationError, VersionConflict
+from app.paths import ProtectedPathError, ensure_writable
+from app.process import main as process_main
+from app.store import Store, StoreLocationError, VersionConflict, reset_database
 
 ROOT = Path(__file__).resolve().parents[1]
 CLOCK = FixedClock(SAMPLE_RUN_TIME)
@@ -133,6 +135,40 @@ def test_optimistic_concurrency(store):
 def test_store_refuses_data_dir(tmp_path):
     with pytest.raises(StoreLocationError):
         Store(tmp_path / "data" / "app.db", forbidden_dirs=(tmp_path / "data",))
+
+
+def test_reset_refuses_protected_dir_before_deleting_anything(tmp_path):
+    protected = tmp_path / "data"
+    protected.mkdir()
+    victim = protected / "app.db"
+    victim.write_text("precious")
+    with pytest.raises(ProtectedPathError):
+        reset_database(victim, protected=(protected,))
+    assert victim.read_text() == "precious"
+
+
+def test_write_outputs_refuses_protected_dir(tmp_path):
+    protected = tmp_path / "data"
+    with pytest.raises(ProtectedPathError):
+        write_outputs([], protected / "out", [], protected=(protected,))
+    assert not protected.exists()  # not even the directory was created
+
+
+def test_default_guard_covers_the_real_data_dir():
+    with pytest.raises(ProtectedPathError):
+        ensure_writable(ROOT / "data" / "reporting_db" / "products.csv")
+    ensure_writable(ROOT / "outputs" / "routing_results.json")  # allowed
+
+
+@pytest.mark.parametrize("args", [
+    ["--db", str(ROOT / "data" / "__guard_probe__.db"), "--reset"],
+    ["--out-dir", str(ROOT / "data" / "__guard_probe_out__")],
+])
+def test_cli_refuses_to_write_under_data(args, capsys):
+    before = sorted(p.name for p in (ROOT / "data").rglob("*"))
+    assert process_main(args) == 2
+    assert "refusing to start" in capsys.readouterr().err
+    assert sorted(p.name for p in (ROOT / "data").rglob("*")) == before  # nothing created or deleted
 
 
 # ---- output format -----------------------------------------------------------------------------

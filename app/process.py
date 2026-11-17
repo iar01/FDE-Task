@@ -21,7 +21,8 @@ from app.pipeline import Pipeline, explanation
 from app.reporting import load_snapshot
 from app.rules import RulesError, load_rules
 from app.stock_client import StockClient
-from app.store import Store, StoreLocationError, reset_database
+from app.paths import PROTECTED_DIRS, ProtectedPathError, ensure_writable
+from app.store import Store, reset_database
 
 
 def _clock(as_of: str) -> Clock:
@@ -54,6 +55,15 @@ def main(argv: list[str] | None = None) -> int:
     except (ValueError, argparse.ArgumentTypeError) as exc:
         p.error(str(exc))
 
+    # Never write under data/ or the reporting snapshot: check every write target before any I/O.
+    protected = (*PROTECTED_DIRS, settings.reporting_dir)
+    try:
+        ensure_writable(args.db, protected, what="use the app database")
+        ensure_writable(args.out_dir, protected, what="write outputs")
+    except ProtectedPathError as exc:
+        print(f"refusing to start: {exc}", file=sys.stderr)
+        return 2
+
     snapshot = load_snapshot(settings.reporting_dir)
     directory = Directory.from_snapshot(snapshot)
     try:
@@ -63,11 +73,11 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     if args.reset:
-        reset_database(args.db)
+        reset_database(args.db, protected)
     drafts = load_drafts(args.drafts)
     try:
-        store = Store(args.db)
-    except StoreLocationError as exc:
+        store = Store(args.db, forbidden_dirs=protected)
+    except ProtectedPathError as exc:
         print(f"refusing to start: {exc}", file=sys.stderr)
         return 2
 
@@ -80,7 +90,7 @@ def main(argv: list[str] | None = None) -> int:
         as_of = clock.now().isoformat()
         try:
             results_path, expl_path = write_outputs(results, args.out_dir,
-                                                    [explanation(r, as_of) for r in results])
+                                                    [explanation(r, as_of) for r in results], protected)
         except OutputValidationError as exc:
             print(f"output invalid, not written: {exc}", file=sys.stderr)
             return 3
